@@ -1,5 +1,6 @@
 <?php require('getInfo.php'); ?>
 <?php require('tiles.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,32 +15,21 @@
 </head>
 
 <body>
-   <h1>Assignment #2. </h1>
+   <h1>Assignment #2. Scrabble Board</h1>
 
-   <form method='GET' name='xkcd' action='index.php'>
+   <form method='GET' name='scrabble' action='index.php'>
 
-      <label for='words'>Number of Words</label>
-      <input type='number' name='words' min="2" max="6" value="2"><br>
+      <label for='word'>Enter the word</label>
+      <input type='text' name='word' minLength="2" maxLength="9" required="true"><br>
 
+      <label for='optimize'>Look for optimal score</label>
+      <input type='checkbox' name="optimize" <?php if ($bingo) echo 'CHECKED' ?>><br>
 
+      <label for='bingo'>Include 50 point bingo?</label>
+      <input type="radio" name="bingo" value="Yes">Yes</input>
+      <input type="radio" name="bingo" value="No">No</input><br><br>
 
-      <input type='checkbox' name="capital" <?php if ($lucky) echo 'CHECKED' ?>>
-      <label for='capital'>Uppercase Letter</label><br>
-
-      <input type='checkbox' name="number" <?php if ($lucky) echo 'CHECKED' ?>>
-      <label for='capital'>Number</label><br>
-
-      <input type='checkbox' name="special" <?php if ($lucky) echo 'CHECKED' ?>>
-      <label for='capital'>Special Character</label><br>
-
-      <label for='charlist'>Special Characters</label>
-      <select name='charlist'>
-         <option value='@'>@</option>
-         <option value='#'>#</option>
-         <option value='$'>$</option>
-      </select><br>
-
-      <input type='submit' class="btn btn-success btn-med" value='Generate'>
+      <input type='submit' class="btn btn-success btn-med" value='Calculate'>
    </form>
 
 </body>

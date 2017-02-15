@@ -1,6 +1,6 @@
 
 <?php
-require('tools.php');
+include_once('tools.php');
 
 // Create a table of the alphabet tiles
 // scrabble board is 15x15 - start at lower left (0,0)
@@ -20,4 +20,4 @@ $board = json_decode($boardJson, $assoc=true);
 
 echo $board[7][7];
 
-dump($board);
+//dump($board);
