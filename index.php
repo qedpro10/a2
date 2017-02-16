@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <!-- Latest compiled and minified CSS -->
-  
+
   <link rel="stylesheet" href="css/tiles.css">
 </head>
 
@@ -34,7 +34,13 @@
 
    <?php echo boardSetup($board); ?>
 
-
+   <?php
+   if ($maxScore) {
+       echo $maxScore . "<br>";
+       echo $wordScore[0] . "<br>";
+       echo $wordScore[1] . " <br>";
+   }
+   ?>
 </body>
 
 </html>
