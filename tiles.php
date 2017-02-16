@@ -18,6 +18,35 @@ $tiles = json_decode($tilesJson, $assoc=true);
 $boardJson = file_get_contents('boardDefinition.json');
 $board = json_decode($boardJson, $assoc=true);
 
-echo $board[7][7];
+//dump($board);
+//echo $board[7][7];
+
+function boardSetup($tableArray) {
+   $tableHtml = '<table id="scrabbleLayout">' . "\r\n";
+
+
+   for ($i=0; $i<count($tableArray); $i++) {
+      $tableHtml .= "<tr>\r\n";
+      foreach ($tableArray[$i] as $square => $element) {
+         $tableHtml .= "<td width=30 height=30>";
+         if($element != "") {
+            $tileClass = strtolower($element);
+            $tableHtml .= "<div id='tileBlock' class='$tileClass'></div></td>\r\n";
+         }
+         else {
+            $tableHtml .= "<div id='tileBlock'></div></td>\r\n";
+         }
+      }
+      $tableHtml .= "</tr>\r\n";
+   }
+
+   $tableHtml .= "</table>\r\n";
+
+
+   return $tableHtml;
+}
+
+
+
 
 //dump($board);

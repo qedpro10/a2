@@ -1,0 +1,33 @@
+#scrabbleLayout {
+   width: 450px;
+   //border: 3px solid black;
+   background-color: grey;
+}
+
+#tileBlock {
+	height: 30px;
+	width: 30px;
+   border: 4px solid white;
+   border-collapse: collapse; /* single border not detached */
+
+}
+
+.tws {
+   background-color: red;
+
+}
+
+.dws {
+   background-color: pink;
+
+}
+
+.tls {
+   background-color: blue;
+
+}
+
+.dls {
+   background-color: lightblue;
+
+}
