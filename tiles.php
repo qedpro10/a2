@@ -1,4 +1,3 @@
-
 <?php
 require('Tools.php');
 
@@ -86,7 +85,7 @@ function calculateScore($word) {
 $maxScore = 0;
 $minScore = 0;
 $wordScore = [0,0];
-$word = (isset($_GET['word'])) ? $_GET['word'] : "";
+//$word = (isset($_GET['word'])) ? $_GET['word'] : "";
 if ($word != "") {
     $maxScore = calculateMaxScore($word, $tiles);
 }
@@ -135,8 +134,3 @@ function boardSetup($tableArray) {
    $tableHtml .= "</table>\r\n";
    return $tableHtml;
 }
-
-
-
-
-//dump($board);
