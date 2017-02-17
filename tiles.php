@@ -1,6 +1,6 @@
 
 <?php
-include_once('tools.php');
+require('Tools.php');
 
 // Create a table of the alphabet tiles
 // scrabble board is 15x15 - start at lower left (0,0)
@@ -9,7 +9,7 @@ $tilesJson = file_get_contents('tiles.json');
 $tiles = json_decode($tilesJson, $assoc=true);
 //dump($tiles);
 
-// scrabble board is 15x15 - start at lower left (0,0)
+// scrabble board is 15x15 - start at upper left (0,0)
 // Define the board as a 2D string array
 // the string value indicates the following
 // '' = emply
@@ -23,7 +23,7 @@ $board = json_decode($boardJson, $assoc=true);
 // given the work, calculate the max score and position of first letter
 function calculateMaxScore($word, $tiles) {
      $wordArray = str_split($word);
-     dump($wordArray);
+     //DWA\Tools::dump($wordArray);
      $score = 0;
      foreach ($wordArray as $letter => $element) {
          $score += $tiles[strtoupper($element)];
@@ -50,40 +50,31 @@ function calculateScore($word) {
              switch ($board[0][$j+$i]) {
                 case "TWS":
                     $bTws = true;
-                    echo "TWS found" . "<br>";
                     $temp += $tiles[strtoupper($wordArray[$j])];
                     break;
                 case "DWS":
-                    echo "DWS found" . "<br>";
                     $bDws = true;
                     $temp += $tiles[strtoupper($wordArray[$j])];
                     break;
                 case "TLS":
-                    echo "TLS score found" . "<br>";
                     $temp += ($tiles[strtoupper($wordArray[$j])] * 3);
                     break;
                 case "DLS":
-                    echo "DLS score found" . "<br>";
                     $temp += ($tiles[strtoupper($wordArray[$j])] * 2);
                     break;
                 default:
                     $temp += $tiles[strtoupper($wordArray[$j])];
                     break;
             }
-            echo "j=$j i=$i letter=$wordArray[$j] temp= $temp" . "<br>";
         }
         if ($bTws == true) {
-            echo "temp score: $temp" . "<br>";
             $temp *= 3;
-            echo "temp score with TWS:" . $temp . "<br>";
         }
         else if ($bDws == true) {
             $temp *= 2;
-            echo "temp score with DWS:" . $temp . "<br>";
         }
 
         if ($temp > $score[1]) {
-            echo "temp score $temp greater than score: $score[1]" . "<br>";
             $score[1] = $temp;
         }
     }
@@ -103,10 +94,6 @@ if ($word != "") {
     $wordScore = calculateScore($word, $tiles);
 }
 
-// special char checkbox
-$bingo = (isset($_GET['bingo'])) ? true : false;
-
-$optimize = (isset($_GET['optimize'])) ? true : false;
 
 /*
 // creates the tiles for the word
