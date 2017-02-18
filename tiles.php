@@ -1,6 +1,7 @@
 <?php
 require('Tools.php');
 
+use DWA\Tools;
 // Create a table of the alphabet tiles
 // scrabble board is 15x15 - start at lower left (0,0)
 // Define the alphabet tiles with their score
@@ -19,78 +20,96 @@ $board = json_decode($boardJson, $assoc=true);
 
 
 
-// given the work, calculate the max score and position of first letter
-function calculateMaxScore($word, $tiles) {
-     $wordArray = str_split($word);
-     //DWA\Tools::dump($wordArray);
-     $score = 0;
-     foreach ($wordArray as $letter => $element) {
-         $score += $tiles[strtoupper($element)];
-     }
-     return $score;
-    // set the position
-}
 
-function calculateScore($word) {
-    global $board;
+// move the word around the board to find the max score
+// return the score and the position in an array
+function getMaxScore($word) {
     global $tiles;
-     $wordArray = str_split($word);
-     $score = [0,0];
-     foreach ($wordArray as $letter => $element) {
-         $score[0] += $tiles[strtoupper($element)];
-     }
-     $score[1] = $score[0];
-     // now get the max score
-     for ($i=0; $i<=count($board[0])-count($wordArray); $i++) {
-         $temp = 0;
-         $bTws = false;
-         $bDws = false;
-         for ($j=0; $j<count($wordArray); $j++) {
-             switch ($board[0][$j+$i]) {
-                case "TWS":
-                    $bTws = true;
-                    $temp += $tiles[strtoupper($wordArray[$j])];
-                    break;
-                case "DWS":
-                    $bDws = true;
-                    $temp += $tiles[strtoupper($wordArray[$j])];
-                    break;
-                case "TLS":
-                    $temp += ($tiles[strtoupper($wordArray[$j])] * 3);
-                    break;
-                case "DLS":
-                    $temp += ($tiles[strtoupper($wordArray[$j])] * 2);
-                    break;
-                default:
-                    $temp += $tiles[strtoupper($wordArray[$j])];
-                    break;
+    global $board;
+    $highScore=[0,0,0];  //word score, x-position, y-position
+    $score=getMinScore($word)[0];
+    $highScore[0] = $score;
+    $wordArray = str_split($word);
+    for ($j=0; $j<=count($board[0])/2+1; $j++) {
+        for ($i=0; $i<=count($board[$j])-count($wordArray); $i++) {
+            $score = calculateScoreByPosition($word, $i, $j);
+            if ($score > $highScore[0]) {
+                $highScore[0] = $score;
+                $highScore[1] = $i;
+                $highScore[2] = $j;
             }
         }
-        if ($bTws == true) {
-            $temp *= 3;
-        }
-        else if ($bDws == true) {
-            $temp *= 2;
-        }
+        //Tools::dump($highScore);
+        //echo "highScore ($highScore[1], $highScore[2]) with score: $highScore[0] <br>";
+    }
+    //Tools::dump($highScore);
+    return $highScore;
+}
 
-        if ($temp > $score[1]) {
-            $score[1] = $temp;
+function getMinScore($word) {
+    global $tiles;
+    $wordArray = str_split($word);
+    $minScore = 0;
+    foreach ($wordArray as $letter => $element) {
+        $minScore += $tiles[$element];
+    }
+    return [$minScore, 5, 7];
+}
+
+function calculateScoreByPosition($word, $x, $y) {
+    global $board;
+    global $tiles;
+    $wordArray = str_split($word);
+    $score = 0;
+    $bTws = false;
+    $bDws = false;
+
+    // calculate the word score based on the position on the board
+    // for now assume horizontal
+    for ($j=0; $j<count($wordArray); $j++) {
+        // validate the position pos[x,y]
+
+        // calculate the letter score
+        switch ($board[$x+$j][$y]) {
+            case "TWS":
+                $bTws = true;
+                $score += $tiles[strtoupper($wordArray[$j])];
+                break;
+            case "DWS":
+                $bDws = true;
+                $score += $tiles[strtoupper($wordArray[$j])];
+                break;
+            case "TLS":
+                $score += ($tiles[strtoupper($wordArray[$j])] * 3);
+                break;
+            case "DLS":
+                $score += ($tiles[strtoupper($wordArray[$j])] * 2);
+                break;
+            default:
+                $score += $tiles[strtoupper($wordArray[$j])];
+                break;
         }
     }
+    if ($bTws == true) {
+        $score *= 3;
+    }
+    else if ($bDws == true) {
+        $score *= 2;
+    }
+    //echo "calcScoreByPosition with ($x, $y) with score: $score <br>";
     return $score;
     // set the position
 }
 
 // theme
-$maxScore = 0;
-$minScore = 0;
-$wordScore = [0,0];
+$maxScore = null;
+$minScore = null;
 //$word = (isset($_GET['word'])) ? $_GET['word'] : "";
 if ($word != "") {
-    $maxScore = calculateMaxScore($word, $tiles);
+    $maxScore = getMaxScore($word);
 }
 if ($word != "") {
-    $wordScore = calculateScore($word, $tiles);
+    $minScore = getMinScore($word);
 }
 
 

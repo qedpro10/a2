@@ -44,8 +44,9 @@
 
                 <?php
                 if ($maxScore) {
-                    echo "Minimum Score: $wordScore[0]<br>";
-                    echo "Maximum Score: $wordScore[1]<br>";
+                    echo "Minimum Score: $minScore[0]<br>";
+                    echo "Maximum Score: $maxScore[0]<br>";
+                    echo "Max Score Location: ($maxScore[1], $maxScore[2])";
                 }
                 ?>
             </div>

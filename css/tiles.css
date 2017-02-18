@@ -1,5 +1,5 @@
 body {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: sans-serif;
 }
 
 h1 {
@@ -26,6 +26,7 @@ h1 {
 #letterTile {
     float: left;
 	text-align: center;
+    font-family: 'Source Sans Pro', sans-serif;
     background-color: #e6cc93;
 	height: 30px;
 	width: 30px;
