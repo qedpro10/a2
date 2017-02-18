@@ -1,5 +1,4 @@
 <?php require('getInfo.php'); ?>
-<?php require('tiles.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,20 +42,20 @@
                 </form>
 
                 <?php
-                if ($maxScore) {
-                    echo "Minimum Score: $minScore[0]<br>";
-                    echo "Maximum Score: $maxScore[0]<br>";
-                    echo "Max Score Location: ($maxScore[1], $maxScore[2])";
+                if ($maxWordScore) {
+                    echo "Minimum Score: $minWordScore[0]<br>";
+                    echo "Maximum Score: $maxWordScore[0]<br>";
+                    echo "Max Score Location: ($maxWordScore[1], $maxWordScore[2])";
                 }
                 ?>
             </div>
             <div class="col col-md-8">
-                <?php echo boardSetup($board); ?>
+                <?php echo $boardHtml; ?>
             </div>
         </div>
         <div class="row">
             <div class="col col-md-12">
-                <?php echo tileSetup($word); ?>
+                <?php echo $tileHtml; ?>
             </div>
         </div>
     </div>
