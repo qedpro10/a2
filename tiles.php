@@ -17,8 +17,8 @@ $tiles = json_decode($tilesJson, $assoc=true);
 $boardJson = file_get_contents('boardDefinition.json');
 $board = json_decode($boardJson, $assoc=true);
 
-//dump($board);
-//echo $board[7][7];
+
+
 // given the work, calculate the max score and position of first letter
 function calculateMaxScore($word, $tiles) {
      $wordArray = str_split($word);
@@ -94,26 +94,22 @@ if ($word != "") {
 }
 
 
-/*
-// creates the tiles for the word
-function tileSetup($wordStr) {
+// creates the table of tiles for the word
+function tileSetup($word) {
+    $wordArray = str_split(strtoupper($word));
     $tileHtml = '<table id="tileLayout">' . "\r\n";
     $tileHtml .= "<tr>\r\n";
-    foreach ($tileArray as $tile => $element) {
-        $tileHtml .= "<td width=30 height=30>$tile";
+    foreach ($wordArray as $tile => $element) {
+        $tileHtml .= "<td>";
         if($element != "") {
-            $tileClass = $element;
-            $tileHtml .= "<div id='tileBlock' class='$tileClass'></div></td>\r\n";
-        }
-        else {
-            $tileHtml .= "<div id='tileBlock' class='blank'></div></td>\r\n";
+            $tileHtml .= "<div id='letterTile' class='tileClass'>$element</div></td>\r\n";
         }
     }
     $tileHtml .= "</tr>\r\n";
     $tileHtml .= "</table>\r\n";
    return $tileHtml;
 }
-*/
+
 // creates the scrabble board as a table in html
 function boardSetup($tableArray) {
    $tableHtml = '<table id="scrabbleLayout">' . "\r\n";

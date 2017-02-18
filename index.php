@@ -53,6 +53,11 @@
                 <?php echo boardSetup($board); ?>
             </div>
         </div>
+        <div class="row">
+            <div class="col col-md-12">
+                <?php echo tileSetup($word); ?>
+            </div>
+        </div>
     </div>
 </body>
 
