@@ -1,5 +1,5 @@
 body {
-    font-family: sans-serif;
+    //font-family: sans-serif;
 }
 
 h1 {
@@ -36,6 +36,11 @@ h1 {
     border-color: #dec48b #dec48b #b69c63 #dec48b;
 }
 
+.btn-calc {
+    margin: 0;
+    text-align: center;
+    padding-top: 20px;
+}
 
 table {
     border-collapse: collapse;

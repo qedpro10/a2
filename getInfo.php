@@ -2,39 +2,50 @@
 require('Form.php');
 require("Scrabble.php");
 
-use DWA\Form;
+
 use JAS\Scrabble;
 
 
 $sBoard = new Scrabble();
+$form = new DWA\Form($_GET);
 
-$form = new Form($_GET);
+$boardHtml = $sBoard->getBoardLayout();
+
+$errors=[];
 
 if($form->isSubmitted()) {
 
+    $minonly = $form->isChosen('minonly', false);
+    $bingo = $form->get('bingo');
+    $word = $form->get('word', $default='');
+
     $errors = $form->validate(
         [
-            'text' => 'required',
+            'word' => 'required',
         ]
     );
-}
 
-$boardHtml = $sBoard->getBoardLayout();
-$tileHtml = "";
+    if($errors) {
 
-// input Values
-$haveResults = true;
-$minonly = $form->isChosen('minonly');
-$bingo = $form->get('bingo', 'no');
-$word = strtoupper($form->get('word', ''));
+    }
+    else {
+        if ($word != "") {
+            // get the min/max scores
+            $maxWordScore = $sBoard->getMaxScore($word);
+            $minWordScore = $sBoard->getMinScore($word);
 
-if ($word != "") {
-    // get the min/max scores
-    $maxWordScore = $sBoard->getMaxScore($word);
-    $minWordScore = $sBoard->getMinScore($word);
-    // create the tile overlay
-    $tileHTML = $sBoard->tileSetup($word, $maxWordScore[1], $maxWordScore[2]);
+            // create the tile overlay
+            $tileHtml = $sBoard->tileSetup($word, $maxWordScore[1], $maxWordScore[2]);
+        }
+        else {
+            $tileHtml = "";
+        }
+    }
 }
 else {
-    $tileHtml = "";
+    $word = '';
+    $tileHtml = '';
 }
+
+// input Values
+//$haveResults = true;
