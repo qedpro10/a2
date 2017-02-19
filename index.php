@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Scrabble Calculaor</title>
+    <title>Scrabble Calculator</title>
     <meta name="description" content="">
     <meta name="author" content="Jen Smith">
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'>
@@ -52,6 +52,13 @@
 
            <div class="col col-md-8">
                <?=$boardHtml; ?>
+               <table>
+                   <tr>
+                       <td><div id='letterTile' style="position:relative;left:5px;top:-469px;">C</div></td>
+                       <td><div id='letterTile' style="position:relative;left:5px;top:-469px;">A</div></td>
+                       <td><div id='letterTile' style="position:relative;left:5px;top:-469px;">T</div></td>
+                   </tr>
+               </table>
            </div>
        </div>
 

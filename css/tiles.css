@@ -9,20 +9,22 @@ h1 {
 
 }
 
+/* defines the scrabble board layout */
 #scrabbleLayout {
-   width: 456px;
+   //width: 456px;
    border: 5px solid black;
    background-color: white;
 }
 
-
-#tileBlock {
+/* defines the basic board square on the scrabble board */
+#boardTile {
 	height: 30px;
 	width: 30px;
-    border-collapse: collapse; /* single border not detached */
+    //border-collapse: collapse; /* single border not detached */
 
 }
 
+/* defines a scrabble letter tile that would lay on the board */
 #letterTile {
     float: left;
 	text-align: center;
@@ -46,29 +48,31 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
-   border: 4px solid white;
+td {
+   border: 2px solid white;
+   //border-collapse: collapse;
 }
 
+/* these are the board Tile types that denote
+ * double word score, triple letter score, etc
+ * These tiles are colored differently based on their type
+ */
 .blank {
    background-color: grey;
 }
+
 .tws {
    background-color: red;
-
 }
 
 .dws {
    background-color: pink;
-
 }
 
 .tls {
    background-color: blue;
-
 }
 
 .dls {
    background-color: lightblue;
-
 }

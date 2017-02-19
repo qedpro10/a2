@@ -39,7 +39,7 @@ class Scrabble {
          $highScore=[0,0,0];  //word score, x-position, y-position
          $score=$this->getMinScore($word)[0];
          $highScore[0] = $score;
-         $wordArray = str_split($word);
+         $wordArray = str_split(strtoupper($word));
          for ($j=0; $j<=count($this->board[0])/2+1; $j++) {
              for ($i=0; $i<=count($this->board[$j])-count($wordArray); $i++) {
                  $score = $this->getScoreByPosition($word, $i, $j);
@@ -58,7 +58,7 @@ class Scrabble {
 
      // get the word base score
      public function getMinScore($word) {
-         $wordArray = str_split($word);
+         $wordArray = str_split(strtoupper($word));
          $minScore = 0;
          foreach ($wordArray as $letter => $element) {
              $minScore += $this->tiles[$element];
@@ -67,7 +67,7 @@ class Scrabble {
      }
 
      public function getScoreByPosition($word, $x, $y) {
-         $wordArray = str_split($word);
+         $wordArray = str_split(strtoupper($word));
          $score = 0;
          $bTws = false;
          $bDws = false;
@@ -81,20 +81,20 @@ class Scrabble {
              switch ($this->board[$x+$j][$y]) {
                  case "TWS":
                      $bTws = true;
-                     $score += $this->tiles[strtoupper($wordArray[$j])];
+                     $score += $this->tiles[$wordArray[$j]];
                      break;
                  case "DWS":
                      $bDws = true;
-                     $score += $this->tiles[strtoupper($wordArray[$j])];
+                     $score += $this->tiles[$wordArray[$j]];
                      break;
                  case "TLS":
-                     $score += ($this->tiles[strtoupper($wordArray[$j])] * 3);
+                     $score += ($this->tiles[$wordArray[$j]] * 3);
                      break;
                  case "DLS":
-                     $score += ($this->tiles[strtoupper($wordArray[$j])] * 2);
+                     $score += ($this->tiles[$wordArray[$j]] * 2);
                      break;
                  default:
-                     $score += $this->tiles[strtoupper($wordArray[$j])];
+                     $score += $this->tiles[$wordArray[$j]];
                      break;
              }
          }
@@ -115,9 +115,8 @@ class Scrabble {
          $tileHtml = '<table id="tileLayout">' . "\r\n";
          $tileHtml .= "<tr>\r\n";
          foreach ($wordArray as $tile => $element) {
-             $tileHtml .= "<td>";
              if($element != "") {
-                 $tileHtml .= "<div id='letterTile' class='tileClass'>$element</div></td>\r\n";
+                 $tileHtml .= "<td><div id='letterTile'>$element</div></td>\r\n";
              }
          }
          $tileHtml .= "</tr>\r\n";
@@ -133,11 +132,11 @@ class Scrabble {
            foreach ($this->board[$i] as $square => $element) {
               $tableHtml .= "<td width=30 height=30>";
               if($element != "") {
-                 $tileClass = strtolower($element);
-                 $tableHtml .= "<div id='tileBlock' class='$tileClass'></div></td>\r\n";
+                 $boardTileClass = strtolower($element);
+                 $tableHtml .= "<div id='boardTile' class='$boardTileClass'></div></td>\r\n";
               }
               else {
-                 $tableHtml .= "<div id='tileBlock' class='blank'></div></td>\r\n";
+                 $tableHtml .= "<div id='boardTile' class='blank'></div></td>\r\n";
               }
            }
            $tableHtml .= "</tr>\r\n";
