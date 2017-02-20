@@ -20,7 +20,7 @@ class Scrabble {
         // Define the alphabet tiles with their score
         $tilesJson = file_get_contents('tiles.json');
         $this->tiles = json_decode($tilesJson, $assoc=true);
-
+        //Tools::dump($this->tiles);
         // scrabble board is 15x15 - start at upper left (0,0)
         // Define the board as a 2D string array
         // the string value indicates the following
@@ -34,14 +34,14 @@ class Scrabble {
 
     // move the word around the board to find the max score
     // return the score and the position on the board (in an array)
-    public function getMaxScore($word) {
-        $highScore=[0,0,0];  //word score, x-position, y-position
+    public function getMaxScore($word, $bingo = 'no') {
+        $highScore=[0,0,0, ""];  //word score, x-position, y-position
         $score=$this->getMinScore($word)[0];
         $highScore[0] = $score;
         $wordArray = str_split(strtoupper($word));
         for ($j=0; $j<=count($this->board[0])/2+1; $j++) {
             for ($i=0; $i<=count($this->board[$j])-count($wordArray); $i++) {
-                $score = $this->getScoreByPosition($word, $i, $j);
+                $score = $this->getScoreByPosition($word, $i, $j, false, $bingo);
                 if ($score > $highScore[0]) {
                     $highScore[0] = $score;
                     $highScore[1] = $i;
@@ -51,34 +51,47 @@ class Scrabble {
             //Tools::dump($highScore);
             //echo "highScore ($highScore[1], $highScore[2]) with score: $highScore[0] <br>";
         }
+        if ((strlen($word) == 7) && $bingo == 'yes') {
+            $bScore = $highScore[0] + 50;
+            $highScore[3] = "  / " . $bScore . " w/Bingo";
+        }
         //Tools::dump($highScore);
         return $highScore;
     }
 
     // get the word base score
-    public function getMinScore($word) {
+    public function getMinScore($word, $bingo = 'no') {
         $wordArray = str_split(strtoupper($word));
-        $minScore = 0;
+        $minScore = [0, 4, 7, ''];
         foreach ($wordArray as $letter => $element) {
-            $minScore += $this->tiles[$element];
+            $minScore[0] += $this->tiles[$element];
         }
-        return [$minScore, 4, 7];
+        if ((strlen($word) == 7) && $bingo == 'yes') {
+            $bScore = $minScore[0] + 50;
+            $minScore[3] = "  / " . $bScore . " w/Bingo";
+        }
+        return $minScore;
     }
 
     // calculates the word score based on the position the scrabble board
     // taking into account the occurence of double, triple, letter & word tiles
-    public function getScoreByPosition($word, $x, $y) {
+    public function getScoreByPosition($word, $x, $y, $vert, $bingo='no') {
         $wordArray = str_split(strtoupper($word));
         $score = 0;
         $bTws = false;
         $bDws = false;
+        $h=1;
+        $v=0;
+        if($vert) {
+            $h=0;
+            $v=1;
+        }
         // calculate the word score based on the position on the board
-        // for now assume horizontal
         for ($j=0; $j<count($wordArray); $j++) {
             // validate the position pos[x,y]
 
             // calculate the letter score
-            switch ($this->board[$x+$j][$y]) {
+            switch ($this->board[$x+$j*$h][$y+$j*$v]) {
                 case "TWS":
                     $bTws = true;
                     $score += $this->tiles[$wordArray[$j]];
@@ -104,20 +117,36 @@ class Scrabble {
         else if ($bDws == true) {
             $score *= 2;
         }
+
+        if ((strlen($word) == 7) && $bingo == 'yes') {
+            $score += 50;
+        }
         //echo "calcScoreByPosition with ($x, $y) with score: $score <br>";
         return $score;
         // set the position
     }
 
+    // 0-based check to see if the work will fit ont the board based on the
+    // position specified
+    public function checkWordPlacement($word, $x, $y, $vertical = false) {
+        if ($vertical) {
+            if (($y + strlen($word)) >= 15) return false;
+            else return true;
+        }
+        else {
+            if (($x + strlen($word)) >= 15) return false;
+            else return true;
+        }
+    }
     // creates the table of tiles for the word that is placed on the board
     // x, y denote the square where the first letter is placed
     // need to translate that into a position on the rendered board
     public function tileSetup($word, $x, $y, $vertical) {
         $wordArray = str_split(strtoupper($word));
         $xy=[$x, $y];
-        if($vertical == true) {
-            $xy = $this->htov($x, $y);
-        }
+        //if($vertical == true) {
+        //    $xy = $this->htov($x, $y);
+        //}
 
         //echo "xy= (" .$xy[0] ."," . $xy[1] .")";
         $tileHtml = '<table id="tileLayout">' . "\r\n";
@@ -125,7 +154,8 @@ class Scrabble {
         foreach ($wordArray as $tile => $element) {
             if($element != "") {
                 $pos = $this->positionTranslate($xy, $tile, $vertical);
-                $tileHtml .= "<td><div id='letterTile' style='position:relative;left:$pos[0];top:$pos[1];'>$element</div></td>\r\n";
+                $tileVal = $this->tiles[$element];
+                $tileHtml .= "<td><div id='letterTile' style='position:relative;left:$pos[0];top:$pos[1];'><span>$element</span><span class='number'>$tileVal</span></div></td>\r\n";
                 if($vertical==true) {
                     $xy[1]++;
                 }

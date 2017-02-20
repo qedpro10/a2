@@ -20,9 +20,14 @@ $bingo = $form->get('bingo');
 
 $word = $form->get('word', '');
 
+$xPosition = $form->get('xpos', 'any');
+$yPosition = $form->get('ypos', 'any');
+//Tools::dump($xPosition);
+//Tools::dump($yPosition);
 
 $maxTileHtml = "";
 $minTileHtml = "";
+$yourTileHtml = "";
 
 if($form->isSubmitted()) {
 
@@ -32,22 +37,66 @@ if($form->isSubmitted()) {
         ]
     );
 
-    if($errors) {
-        //Tools::dump($errors);
-    }
-    else {
-        if ($word != "") {
-            // get the min/max scores
-            $maxWordScore = $sBoard->getMaxScore($word);
-            $minWordScore = $sBoard->getMinScore($word);
-
-            // create the tile overlay
-            $maxTileHtml = $sBoard->tileSetup($word, $maxWordScore[1], $maxWordScore[2], $vertical);
-            $minTileHtml = $sBoard->tileSetup($word, $minWordScore[1], $minWordScore[2], $vertical);
+    if (($xPosition != 'any') && ($yPosition != 'any')) {
+        // check word placement for user selection position
+        $posOk = $sBoard->checkWordPlacement($word, $xPosition, $yPosition, $vertical);
+        //Tools::dump($posOk);
+        if (!$posOk) {
+            array_push($errors, "Word cannot fit on board");
         }
         else {
-            $maxTileHtml = "";
-            $minTileHtml = "";
+            $x = $xPosition;
+            $y = $yPosition;
+        }
+    }
+    else {
+        if ($xPosition == 'any') {
+            // pick a random x based on word sze and whether or not vertical is selected
+            if ($vertical) {
+                $x = rand(0, 14);
+            }
+            else {
+                $x = rand(0, 14-strlen($word));
+            }
+        }
+        else {
+            $x = $xPosition;
+        }
+
+        if ($xPosition == 'any') {
+            // pick a random x based on word sze and whether or not vertical is selected
+            if ($vertical) {
+                $y = rand(0, 14-strlen($word));
+            }
+            else {
+                $y = rand(0, 14);
+            }
+        }
+        else {
+            $y = $yPosition;
+        }
+    }
+
+    if(!$errors) {
+        if ($word != "") {
+
+            // get the min/max scores
+            $maxWordScore = $sBoard->getMaxScore($word, $bingo);
+            $minWordScore = $sBoard->getMinScore($word, $bingo);
+            echo "x,y=" .$x ."," .$y;
+            $yourScore = $sBoard->getScoreByPosition($word, $x, $y, $vertical);
+
+            //Tools::dump($maxWordScore);
+
+            // create the tile overlay
+            //$maxTileHtml = $sBoard->tileSetup($word, $maxWordScore[1], $maxWordScore[2], $vertical);
+
+            $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
+            //$minTileHtml = $sBoard->tileSetup($word, $minWordScore[1], $minWordScore[2], $vertical);
+        }
+        else {
+            $yourTileHtml = "";
+            //$minTileHtml = "";
         }
     }
 }
