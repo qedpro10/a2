@@ -78,25 +78,11 @@ if($form->isSubmitted()) {
     }
 
     if(!$errors) {
-        if ($word != "") {
-
-            // get the min/max scores
-            $maxWordScore = $sBoard->getMaxScore($word, $bingo);
-            $minWordScore = $sBoard->getMinScore($word, $bingo);
-            echo "x,y=" .$x ."," .$y;
-            $yourScore = $sBoard->getScoreByPosition($word, $x, $y, $vertical);
-
-            //Tools::dump($maxWordScore);
-
-            // create the tile overlay
-            //$maxTileHtml = $sBoard->tileSetup($word, $maxWordScore[1], $maxWordScore[2], $vertical);
-
-            $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
-            //$minTileHtml = $sBoard->tileSetup($word, $minWordScore[1], $minWordScore[2], $vertical);
-        }
-        else {
-            $yourTileHtml = "";
-            //$minTileHtml = "";
-        }
+        // get the min/max scores
+        $maxWordScore = $sBoard->getMaxScore($word, $bingo);
+        $minWordScore = $sBoard->getMinScore($word, $bingo);
+        echo "x,y=" .$x ."," .$y;
+        $yourScore = $sBoard->getScoreByPosition($word, $x, $y, $vertical);
+        $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
     }
 }
