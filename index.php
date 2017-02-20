@@ -20,54 +20,48 @@
                 <h1>Scrabble Calculator</h1>
             </div>
         </div>
-    <div class="row">
-        <div class="col col-md-4">
-            <h2>Enter Selection</h2>
-            <form method='GET' action='index.php'>
-               <label for='word'>Enter the word</label>
-               <input type='text' name='word' required id='word' value='<?=$form->prefill('word')?>'>
-               (2-7 letters)<br>
+        <div class="row">
+            <div class="col col-md-4">
+                <h2>Enter Selection</h2>
+                <form method='GET' action='index.php'>
+                    <label for='word'>Enter the word</label>
+                    <input type='text' name='word' required id='word' value='<?=$form->prefill('word', '')?>'>
+                    (2-7 letters)<br>
 
-               <label for='minonly'>Minimum score only</label>
-               <input type='checkbox' name="minonly" <?php if($form->isChosen('minonly')) echo 'CHECKED' ?>><br>
+                    <label for='vertical'>Show Vertical</label>
+                    <input type='checkbox' name="vertical" <?php if($form->isChosen('vertical')) echo 'CHECKED' ?>><br>
 
-               <fieldset class='radios'>
-                   <label>Include 50 point bingo?</label>
-                   <label><input type='radio' name='bingo' value='yes' <?php if($form->isChosen('bingo')=='yes') echo 'CHECKED' ?>> Yes</label>
-                   <label><input type='radio' name='bingo' value='no' <?php if($form->isChosen('bingo')=='no') echo 'CHECKED' ?>> No</label>
-               </fieldset>
-               <div class="btn-calc">
-                   <input type='submit' class="btn btn-success btn-sm " value='Calculate'>
-               </div>
-           </form>
-           <div>
-               <h2>Score Summary</h2>
-                  <?php if ($word != ""): ?>
-                      <p>Minimum Score: <?=$minWordScore[0]?></p>
-                      <p>Maximum Score: <?=$maxWordScore[0]?></p>
-                      <p>Maximum Score Position: (<?=$maxWordScore[1]?>, <?=$maxWordScore[2]?>)</p>
-                  <?php endif; ?>
-              </div>
-           </div>
-
-           <div class="col col-md-8">
-               <?=$boardHtml; ?>
-               <table>
-                   <tr>
-                       <td><div id='letterTile' style="position:relative;left:5px;top:-469px;">C</div></td>
-                       <td><div id='letterTile' style="position:relative;left:5px;top:-469px;">A</div></td>
-                       <td><div id='letterTile' style="position:relative;left:5px;top:-469px;">T</div></td>
-                   </tr>
-               </table>
-           </div>
-       </div>
-
-       <div class="row">
-           <div class="col col-md-12">
-               <?=$tileHtml; ?>
-           </div>
-       </div>
-   </div>
+                    <fieldset class='radios'>
+                        <label>Include 50 point bingo?</label>
+                        <label><input type='radio' name='bingo' value='yes' <?php if($form->get('bingo')=='yes') echo 'CHECKED' ?>> Yes</label>
+                        <label><input type='radio' name='bingo' value='no' <?php if($form->get('bingo')=='no') echo 'CHECKED' ?>> No</label>
+                    </fieldset>
+                    <div class="btn-calc">
+                        <input type='submit' class="btn btn-success btn-sm " value='Calculate'>
+                    </div>
+                </form>
+                <div>
+                    <h2>Score Summary</h2>
+                    <?php if($errors): ?>
+                        <div class='alert alert-danger'>
+                            <?php foreach($errors as $error): ?>
+                                <?=$error?><br>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php elseif($word!=''): ?>
+                        <p>Minimum Score: <?=$minWordScore[0]?></p>
+                        <p>Maximum Score: <?=$maxWordScore[0]?></p>
+                        <p>Maximum Score Position: (<?=$maxWordScore[1]?>, <?=$maxWordScore[2]?>)</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="col col-md-8">
+                <?=$boardHtml; ?>
+                <?=$maxTileHtml; ?>
+                <?=$minTileHtml; ?>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

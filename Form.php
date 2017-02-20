@@ -168,6 +168,9 @@ class Form {
             'email' => ' is not a valid email address.',
             'min' => ' has to be greater than '.$parameter,
             'max' => ' has to be less than '.$parameter,
+            'minlength' => ' length must be greater than or equal to '.$parameter,
+            'maxlength' => ' length must be less than or equal to '.$parameter,
+            'vowel' => ' must contain at least '.$parameter . ' vowel',
         ];
 
         # If a message for the rule was found, use that, otherwise default to " has an error"
@@ -195,6 +198,13 @@ class Form {
         return ctype_alpha(str_replace(' ','', $value));
     }
 
+    /**
+	* Returns boolean if given value contains no vowels
+	*/
+    private function vowel($value, $parameter) {
+        $out = preg_match_all('#[aeiou]#', $value);
+        return $out >= floatval($parameter);
+    }
 
     /**
 	* Returns boolean if given value contains only numbers
@@ -234,6 +244,22 @@ class Form {
 	*/
     private function max($value, $parameter) {
         return floatval($value) < floatval($parameter);
+    }
+
+
+    /**
+    * Returns value if the given string length is LESS THAN (non-inclusive) the given parameter
+    */
+    private function minlength($value, $parameter) {
+        return strlen($value) >= floatval($parameter);
+    }
+
+
+    /**
+    * Returns value if the given  string length is LESS THAN (non-inclusive) the given parameter
+    */
+    private function maxlength($value, $parameter) {
+        return strlen($value) <= floatval($parameter);
     }
 
 

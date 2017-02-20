@@ -34,7 +34,7 @@ class Scrabble {
      }
 
      // move the word around the board to find the max score
-     // return the score and the position in an array
+     // return the score and the position on the board (in an array)
      public function getMaxScore($word) {
          $highScore=[0,0,0];  //word score, x-position, y-position
          $score=$this->getMinScore($word)[0];
@@ -63,15 +63,16 @@ class Scrabble {
          foreach ($wordArray as $letter => $element) {
              $minScore += $this->tiles[$element];
          }
-         return [$minScore, 5, 7];
+         return [$minScore, 4, 7];
      }
 
+     // calculates the word score based on the position the scrabble board
+     // taking into account the occurence of double, triple, letter & word tiles
      public function getScoreByPosition($word, $x, $y) {
          $wordArray = str_split(strtoupper($word));
          $score = 0;
          $bTws = false;
          $bDws = false;
-
          // calculate the word score based on the position on the board
          // for now assume horizontal
          for ($j=0; $j<count($wordArray); $j++) {
@@ -109,34 +110,70 @@ class Scrabble {
          // set the position
      }
 
-     // creates the table of tiles for the word
-     public function tileSetup($word, $x, $y) {
+     // creates the table of tiles for the word that is placed on the board
+     // x, y denote the square where the first letter is placed
+     // need to translate that into a position on the rendered board
+     public function tileSetup($word, $x, $y, $vertical) {
          $wordArray = str_split(strtoupper($word));
+         $xy=[$x, $y];
+         if($vertical == true) {
+             $xy = $this->htov($x, $y);
+         }
+
+         //echo "xy= (" .$xy[0] ."," . $xy[1] .")";
          $tileHtml = '<table id="tileLayout">' . "\r\n";
          $tileHtml .= "<tr>\r\n";
          foreach ($wordArray as $tile => $element) {
              if($element != "") {
-                 $tileHtml .= "<td><div id='letterTile'>$element</div></td>\r\n";
+                 $pos = $this->positionTranslate($xy, $tile, $vertical);
+                 $tileHtml .= "<td><div id='letterTile' style='position:relative;left:$pos[0];top:$pos[1];'>$element</div></td>\r\n";
+                 if($vertical==true) {
+                     $xy[1]++;
+                 }
              }
          }
          $tileHtml .= "</tr>\r\n";
          $tileHtml .= "</table>\r\n";
-        return $tileHtml;
+         return $tileHtml;
+     }
+
+     // change the horizontal posiiton to the equivalent vertical position on the board
+     private function htov($x, $y) {
+         return [$y, $x];
+     }
+
+     // nasty function that translates the letterTile to a position on the scrabble board
+     // really nightmarish to deal with
+     // in the x direction it places automatically
+     // in the y direction you need to calculate an offset for each letter and also
+     // calculate how much to push the square back in the x direction
+     // I'm sure there's a better way.  I just don't know it yet.
+     private function positionTranslate($xy, $lpos, $vert) {
+         if ($vert) {
+             $xpos = (5 + ($xy[0]*31) - $lpos*31) ."px";
+             $ypos = (-469 + $xy[1]*31) . "px";
+         }
+         else {
+             $xpos = (5 + $xy[0]*31) ."px";
+             $ypos = (-469 + $xy[1]*31) . "px";
+         }
+
+         //echo "xpos $xpos  ypos $ypos <br>";
+         return [$xpos, $ypos];
      }
 
      // creates the scrabble board as a table in html
      public function getBoardLayout() {
-        $tableHtml = '<table id="scrabbleLayout">' . "\r\n";
+        $tableHtml = "<table id='scrabbleLayout'>\r\n";
         for ($i=0; $i<count($this->board); $i++) {
            $tableHtml .= "<tr>\r\n";
            foreach ($this->board[$i] as $square => $element) {
-              $tableHtml .= "<td width=30 height=30>";
               if($element != "") {
                  $boardTileClass = strtolower($element);
-                 $tableHtml .= "<div id='boardTile' class='$boardTileClass'></div></td>\r\n";
+                 $tableHtml .= "<td><div id='boardTile' class='$boardTileClass'></div></td>\r\n";
               }
               else {
-                 $tableHtml .= "<div id='boardTile' class='blank'></div></td>\r\n";
+                 $tableHtml .= "<td><div id='boardTile' class='blank'></div></td>\r\n";
               }
            }
            $tableHtml .= "</tr>\r\n";

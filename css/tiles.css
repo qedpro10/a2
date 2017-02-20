@@ -20,7 +20,8 @@ h1 {
 #boardTile {
 	height: 30px;
 	width: 30px;
-    //border-collapse: collapse; /* single border not detached */
+    border: 2px;
+    border-collapse: collapse; /* single border not detached */
 
 }
 
@@ -41,7 +42,7 @@ h1 {
 .btn-calc {
     margin: 0;
     text-align: center;
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 table {

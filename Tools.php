@@ -33,4 +33,5 @@ class Tools {
         self::diedump($mixed);
     }
 
+
 } # end of class
