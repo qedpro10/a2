@@ -34,10 +34,10 @@
                     <fieldset class='radios'>
                         <label>Include 50 point bingo?</label>
                         <label><input type='radio' name='bingo' value='yes' <?php if($form->get('bingo')=='yes') echo 'CHECKED' ?>> Yes</label>
-                        <label><input type='radio' name='bingo' value='no' <?php if($form->get('bingo')=='no') echo 'CHECKED' ?>> No</label>
+                        <label><input type='radio' name='bingo' value='no' <?php if($form->prefill('bingo', 'no') == 'no') echo 'CHECKED' ?>> No</label>
                     </fieldset>
                     <div class="btn-calc">
-                        <input type='submit' class="btn btn-success btn-sm " value='Calculate'>
+                        <input type='submit' class="btn btn-info btn-sm " value='Calculate'>
                     </div>
                 </form>
                 <div>

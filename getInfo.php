@@ -42,7 +42,7 @@ if($form->isSubmitted()) {
             $minWordScore = $sBoard->getMinScore($word);
 
             // create the tile overlay
-            //$maxTileHtml = $sBoard->tileSetup($word, $maxWordScore[1], $maxWordScore[2], $vertical);
+            $maxTileHtml = $sBoard->tileSetup($word, $maxWordScore[1], $maxWordScore[2], $vertical);
             $minTileHtml = $sBoard->tileSetup($word, $minWordScore[1], $minWordScore[2], $vertical);
         }
         else {
