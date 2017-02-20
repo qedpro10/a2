@@ -48,7 +48,7 @@ class Scrabble {
 
         for ($j=0; $j<=count($this->board[0])/2+1; $j++) {
             for ($i=0; $i<=count($this->board[$j])-count($wordArray); $i++) {
-                $score = $this->getScoreByPosition($word, $i, $j, false, $bingo);
+                $score = $this->getScoreByPosition($word, $i, $j, $bingo);
                 if ($score > $highScore[0]) {
                     $highScore[0] = $score;
                     $highScore[1] = $i;

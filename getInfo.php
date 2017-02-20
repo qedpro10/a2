@@ -15,8 +15,13 @@ $boardHtml = $sBoard->getBoardLayout();
 $errors=[];
 
 
-$vertical = $form->isChosen('vertical');
-$bingo = $form->get('bingo');
+$bingo = $form->isChosen('bingo');
+$orientation = $form->get('orientation');
+
+$vertical = false;
+if ($orientation == 'vertical') {
+    $vertical = true;
+}
 
 $word = $form->get('word', '');
 
