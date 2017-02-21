@@ -216,20 +216,22 @@ class Scrabble {
         return $tableHtml;
     }
 
-    // nasty function that translates the letterTile to a position on the scrabble board
-    // really nightmarish to deal with
-    // in the x direction it places automatically
-    // in the y direction you need to calculate an offset for each letter and also
-    // calculate how much to push the square back in the x direction
-    // I'm sure there's a better way.  I just don't know it yet.
+    /* nasty function that translates the letterTile to a position on the scrabble board
+     * really nightmarish to deal with - i had to muck around with this a lot to get it to
+     * look ok.
+     * need to calculate an offset for each letter and also
+     * calculate how much to push the square back in the x direction
+     * I'm sure there's a better way.  I just don't know it yet.
+     */
     private function positionTranslate($xy, $lpos, $vert) {
+        $offset = 31;
         if ($vert) {
-            $xpos = (5 + ($xy[0]*31) - $lpos*31) ."px";
-            $ypos = (-469 + $xy[1]*31) . "px";
+            $xpos = (5 + $xy[0]*$offset - $lpos*($offset-1)) ."px";
+            $ypos = (-469 + $xy[1]*($offset)) . "px";
         }
         else {
-            $xpos = (5 + $xy[0]*31) ."px";
-            $ypos = (-469 + $xy[1]*31) . "px";
+            $xpos = (5 + $xy[0]*($offset) +  $lpos*0.75) ."px";
+            $ypos = (-469 + $xy[1]*$offset) . "px";
         }
 
         return [$xpos, $ypos];
