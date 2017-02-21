@@ -103,7 +103,7 @@ if($form->isSubmitted()) {
     }
 
 
-    // why is this here?  because the output works when its here 
+    // why is this here?  because the output works when its here
     //and doesn't work when it isn't
-    echo " ";
+    //echo " ";
 }

@@ -22,13 +22,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col col-md-4">
+            <div class="col col-md-5">
                 <h2>Enter Selection</h2>
                 <form method='GET' action='index.php'>
-                    <label for='word'>Enter the word: </label>
-                    <input type='text' name='word' required id='word' value='<?=$form->prefill('word', '')?>'>
-                    (Required*)<br><br>
-
+                    <p>
+                        <label for='word'>Enter the word: </label>
+                        <input type='text' name='word' required id='word' value='<?=$form->prefill('word', '')?>'> (Required*)
+                    </p>
                     <label>Choose a position (x,y): </label>
                     <select name='xpos'>
                         <option value="any">any</option>
@@ -73,8 +73,10 @@
                         <label><input type='radio' name='orientation' value='vertical' <?php if($form->get('orientation')=='vertical') echo 'CHECKED' ?>> Vertical</label>
                     </fieldset>
 
-                    <label>Include 50 point Bingo: </label>
-                    <input type='checkbox' name="bingo" <?php if($form->isChosen('bingo')) echo 'CHECKED' ?>><br><br>
+                    <p>
+                        <label>Include 50 point Bingo: </label>
+                        <input type='checkbox' name="bingo" <?php if($form->isChosen('bingo')) echo 'CHECKED' ?>>
+                    </p>
 
                     <div class="btn-calc">
                         <input type='submit' class="btn btn-info btn-sm " value='Calculate'>
@@ -95,7 +97,7 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="col col-md-8">
+            <div class="col col-md-7">
                 <?=$boardHtml; ?>
                 <?=$yourTileHtml; ?>
             </div>
