@@ -15,12 +15,12 @@ class Scrabble {
     /*
      * Constructor
      */
-    public function __construct() {
+    public function __construct($tileFile, $boardFile) {
 
         /* Create a table of the alphabet tiles
          * defining each letter and the corresponding score
          */
-        $tilesJson = file_get_contents('tiles.json');
+        $tilesJson = file_get_contents($tileFile);
         $this->tiles = json_decode($tilesJson, $assoc=true);
 
         /* scrabble board is 15x15 - Internally start at upper left (0,0)
@@ -30,7 +30,7 @@ class Scrabble {
          * 'DL' = double letter score,
          * 'DW' = double word score, etc
          */
-        $boardJson = file_get_contents('boardDefinition.json');
+        $boardJson = file_get_contents($boardFile);
         $this->board = json_decode($boardJson, $assoc=true);
     }
 

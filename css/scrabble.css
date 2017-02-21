@@ -59,8 +59,6 @@ input:required:hover {
 
 .letter {
 	font-size: 25px;
-    //margin-bottom: 5px;
-	//margin: 0px;
 }
 
 .number {
@@ -71,7 +69,6 @@ input:required:hover {
 .btn-calc {
     margin: 0;
     text-align: center;
-    padding: 10px 0;
 }
 
 table {

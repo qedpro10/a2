@@ -7,7 +7,7 @@ use JAS\Scrabble;
 use DWA\Form;
 use DWA\Tools;
 
-$sBoard = new Scrabble();
+$sBoard = new Scrabble('includes/tiles.json', 'includes/boardDefinition.json');
 $form = new Form($_GET);
 
 $boardHtml = $sBoard->getBoardLayout();

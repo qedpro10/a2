@@ -7,10 +7,11 @@
     <title>Scrabble Calculator</title>
     <meta name="description" content="">
     <meta name="author" content="Jen Smith">
+    <link rel="icon" type="images/png" href="images/favicon.ico">
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <link rel="stylesheet" href="css/tiles.css">
+    <link rel="stylesheet" href="css/scrabble.css">
 </head>
 
 <body>
