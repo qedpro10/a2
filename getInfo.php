@@ -30,64 +30,77 @@ $yPosition = $form->get('ypos', 'any');
 //Tools::dump($xPosition);
 //Tools::dump($yPosition);
 
-$maxTileHtml = "";
-$minTileHtml = "";
 $yourTileHtml = "";
+$minScoreBingo = "";
+$maxScoreBingo = "";
+$yourScoreBingo = "";
 
 if($form->isSubmitted()) {
 
     $errors = $form->validate(
         [
+            // word is required, needs at least 1 vowel, only letters, length 2-7
             'word' => 'required|alpha|vowel:1|maxlength:7|minlength:2',
         ]
     );
 
-    if (($xPosition != 'any') && ($yPosition != 'any')) {
-        // check word placement for user selection position
-        $posOk = $sBoard->checkWordPlacement($word, $xPosition, $yPosition, $vertical);
-        //Tools::dump($posOk);
-        if (!$posOk) {
-            array_push($errors, "Word cannot fit on board");
+
+    if ($xPosition == 'any') {
+        // pick a random x based on word size and whether or not vertical is selected
+        if ($vertical) {
+            $x = rand(0, 14);
         }
         else {
-            $x = $xPosition;
-            $y = $yPosition;
+            $x = rand(0, 14-strlen($word)+1);
         }
     }
     else {
-        if ($xPosition == 'any') {
-            // pick a random x based on word sze and whether or not vertical is selected
-            if ($vertical) {
-                $x = rand(0, 14);
-            }
-            else {
-                $x = rand(0, 14-strlen($word));
-            }
-        }
-        else {
-            $x = $xPosition;
-        }
+        $x = $xPosition;
+    }
 
-        if ($xPosition == 'any') {
-            // pick a random x based on word sze and whether or not vertical is selected
-            if ($vertical) {
-                $y = rand(0, 14-strlen($word));
-            }
-            else {
-                $y = rand(0, 14);
-            }
+    if ($yPosition == 'any') {
+        // pick a random x based on word sze and whether or not vertical is selected
+        if ($vertical) {
+            $y = rand(0, 14-strlen($word)+1);
         }
         else {
-            $y = $yPosition;
+            $y = rand(0, 14);
         }
+    }
+    else {
+        $y = $yPosition;
+    }
+
+    // check word placement for user selection position
+    $posOk = $sBoard->checkWordPlacement($word, $xPosition, $yPosition, $vertical);
+    //Tools::dump($posOk);
+    if (!$posOk) {
+        $v = $vertical ? " vertically" : "";
+        // internal to external position conversion
+        $x = $xPosition == "any" ? "any" : $xPosition+1;
+        $y = $yPosition == "any" ? "any" : $yPosition+1;
+        array_push($errors, "Word cannot fit$v on board at ($x, $y)");
     }
 
     if(!$errors) {
         // get the min/max scores
-        $maxWordScore = $sBoard->getMaxScore($word, $bingo);
-        $minWordScore = $sBoard->getMinScore($word, $bingo);
-        echo "x,y=" .$x ."," .$y;
+        $maxWordScore = $sBoard->getMaxScore($word, $vertical);
+        $maxWordScore = $sBoard->convertToHtmlPos($maxWordScore);
+
+        $minWordScore = $sBoard->getMinScore($word, $vertical);
+        $minWordScore = $sBoard->convertToHtmlPos($minWordScore);
+
         $yourScore = $sBoard->getScoreByPosition($word, $x, $y, $vertical);
+        $yourScore = $sBoard->convertToHtmlPos($yourScore);
+
+        if ($bingo) {
+            $minScoreBingo = $sBoard->getBingoScore($word, $minWordScore[0]);
+            $maxScoreBingo = $sBoard->getBingoScore($word, $maxWordScore[0]);
+            $yourScoreBingo = $sBoard->getBingoScore($word, $yourScore[0]);
+        }
+
+
+        echo "x,y=" .$x ."," .$y;
         $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
     }
 }

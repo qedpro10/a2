@@ -38,52 +38,48 @@ class Scrabble {
      * return the score and the position on the board (in an array)
      * note that horizontal and vertical will return different positions
      * but will have the same score
+     * returns array [score, x-pos, y-pos]
      */
-    public function getMaxScore($word, $bingo = 'no') {
+    public function getMaxScore($word, $vertical=false) {
 
-        $highScore=[0,0,0, ""];  //word score, x-position, y-position
-        $score=$this->getMinScore($word)[0];
-        $highScore[0] = $score;
+        $highScore=[0,0,0];
+        $score=$this->getMinScore($word);
+        $highScore = $score;
         $wordArray = str_split(strtoupper($word));
 
         for ($j=0; $j<=count($this->board[0])/2+1; $j++) {
             for ($i=0; $i<=count($this->board[$j])-count($wordArray); $i++) {
-                $score = $this->getScoreByPosition($word, $i, $j, $bingo);
-                if ($score > $highScore[0]) {
-                    $highScore[0] = $score;
-                    $highScore[1] = $i;
-                    $highScore[2] = $j;
+                $score = $this->getScoreByPosition($word, $i, $j, $vertical);
+                if ($score[0] > $highScore[0]) {
+                    $highScore = $score;
                 }
             }
-        }
-        // add the bingo score if applicable
-        if ((strlen($word) == 7) && $bingo == 'yes') {
-            $bScore = $highScore[0] + 50;
-            $highScore[3] = "  / " . $bScore . " w/Bingo";
         }
         return $highScore;
     }
 
-    // get the word base score
-    public function getMinScore($word, $bingo = 'no') {
+    // get the word base score and position
+    // returns array [score, x-pos, y-pos]
+    public function getMinScore($word, $vertical=false) {
+
         $wordArray = str_split(strtoupper($word));
-        $minScore = [0, 4, 7, ''];
+
+        $minScore = [0, 4, 7];
+        if ($vertical) {
+            $minScore = [0, 7, 4];
+        }
 
         foreach ($wordArray as $letter => $element) {
             $minScore[0] += $this->tiles[$element];
         }
 
-        if ((strlen($word) == 7) && $bingo == 'yes') {
-            $bScore = $minScore[0] + 50;
-            $minScore[3] = "  / " . $bScore . " w/Bingo";
-        }
         return $minScore;
     }
 
     // get the word score based on the position the scrabble board
     // taking into account the occurence of double, triple, letter & word tiles
-    // returns an integer value
-    public function getScoreByPosition($word, $x, $y, $vert, $bingo='no') {
+    // returns array [score, xpos, ypos]
+    public function getScoreByPosition($word, $x, $y, $vert=false) {
 
         $wordArray = str_split(strtoupper($word));
         $score = 0;
@@ -132,11 +128,22 @@ class Scrabble {
         else if ($bDws == true) {
             $score *= 2;
         }
+        return [$score, $x, $y];
+    }
 
-        // add the bingo score if applicable
-        if ((strlen($word) == 7) && $bingo == 'yes') {
-            $score += 50;
+    // determines if bingo score is applicable and adds to the
+    // given score
+    public function getBingoScore($word, $score) {
+        if (strlen($word) == 7) {
+            $bingoScore = $score + 50;
+            return  " - w/Bingo: $bingoScore";
         }
+        return "";
+    }
+
+    public function convertToHtmlPos($score) {
+        $score[2]++;
+        $score[1]++;
         return $score;
     }
 
@@ -146,11 +153,11 @@ class Scrabble {
      */
     public function checkWordPlacement($word, $x, $y, $vertical = false) {
         if ($vertical) {
-            if (($y + strlen($word)) >= 15) return false;
+            if (($y + strlen($word)) > 15) return false;
             else return true;
         }
         else {
-            if (($x + strlen($word)) >= 15) return false;
+            if (($x + strlen($word)) > 15) return false;
             else return true;
         }
     }

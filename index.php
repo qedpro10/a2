@@ -28,7 +28,7 @@
                     <input type='text' name='word' required id='word' value='<?=$form->prefill('word', '')?>'>
                     (Required*)<br><br>
 
-                    <label for='xpos'>Choose Your Position (x,y)</label>
+                    <label for='xpos'>Choose A Position (x,y)</label>
                     <select name='xpos'>
                         <option value="any">any</option>
                         <option value="0"  <?php if($form->get('xpos') == '0') echo 'SELECTED'?> >1</option>
@@ -68,7 +68,7 @@
 
                     <fieldset class='radios'>
                         <label>Word Orientation: </label>
-                        <label><input type='radio' name='orientation' value='horizontal' <?php if($form->prefill('orientation', 'horizontal') == 'horizontal') echo 'CHECKED' ?> > Horizontal</label>
+                        <label><input type='radio' name='orientation' value='horizontal' <?php if($form->prefill('orientation', 'horizontal') == 'horizontal') echo 'CHECKED' ?>> Horizontal</label>
                         <label><input type='radio' name='orientation' value='vertical' <?php if($form->get('orientation')=='vertical') echo 'CHECKED' ?>> Vertical</label>
                     </fieldset>
 
@@ -88,10 +88,9 @@
                             <?php endforeach; ?>
                         </div>
                     <?php elseif($word!=''): ?>
-                        <p>Minimum Score: <?=$minWordScore[0]?> <?=$minWordScore[3]?></p>
-                        <p>Maximum Score: <?=$maxWordScore[0]?> <?=$maxWordScore[3]?></p>
-                        <p>Maximum Score Position: (<?=$maxWordScore[1]?>, <?=$maxWordScore[2]?>)</p>
-                        <p>Your Position Score at (<?=$x+1?>, <?=$y+1?>): <?=$yourScore?></p>
+                        <p>Minimum Score at (<?=$minWordScore[1]?>, <?=$minWordScore[2]?>):  <?=$minWordScore[0]?> <?=$minScoreBingo?></p>
+                        <p>Maximum Score at (<?=$maxWordScore[1]?>, <?=$maxWordScore[2]?>):  <?=$maxWordScore[0]?> <?=$maxScoreBingo?></p>
+                        <p>Position Score at (<?=$yourScore[1]?>, <?=$yourScore[2]?>):  <?=$yourScore[0]?> <?=$yourScoreBingo?></p>
                     <?php endif; ?>
                 </div>
             </div>
