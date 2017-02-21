@@ -29,7 +29,7 @@
                     <input type='text' name='word' required id='word' value='<?=$form->prefill('word', '')?>'>
                     (Required*)<br><br>
 
-                    <label for='xpos'>Choose A Position (x,y)</label>
+                    <label for='xpos'>Choose a position (x,y)</label>
                     <select name='xpos'>
                         <option value="any">any</option>
                         <option value="0"  <?php if($form->get('xpos') == '0') echo 'SELECTED'?> >1</option>
@@ -68,7 +68,7 @@
                     </select>
 
                     <fieldset class='radios'>
-                        <label>Word Orientation: </label>
+                        <label>Word orientation: </label>
                         <label><input type='radio' name='orientation' value='horizontal' <?php if($form->prefill('orientation', 'horizontal') == 'horizontal') echo 'CHECKED' ?>> Horizontal</label>
                         <label><input type='radio' name='orientation' value='vertical' <?php if($form->get('orientation')=='vertical') echo 'CHECKED' ?>> Vertical</label>
                     </fieldset>

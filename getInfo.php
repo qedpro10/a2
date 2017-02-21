@@ -1,7 +1,7 @@
 <?php
 require('Form.php');
-require("Scrabble.php");
-require("Tools.php");
+require('Scrabble.php');
+require('Tools.php');
 
 use JAS\Scrabble;
 use DWA\Form;

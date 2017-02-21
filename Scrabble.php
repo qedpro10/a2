@@ -2,8 +2,6 @@
 
 namespace JAS;
 
-//require('Tools.php');
-//use DWA\Tools;
 
 class Scrabble {
 
@@ -32,6 +30,8 @@ class Scrabble {
          */
         $boardJson = file_get_contents($boardFile);
         $this->board = json_decode($boardJson, $assoc=true);
+
+        //Tools::dump($this->tiles);
     }
 
     /* move the word around the board to find the max score
@@ -79,7 +79,7 @@ class Scrabble {
     // get the word score based on the position the scrabble board
     // taking into account the occurence of double, triple, letter & word tiles
     // returns array [score, xpos, ypos]
-    public function getScoreByPosition($word, $x, $y, $vert=false) {
+    public function getScoreByPosition($word, $x, $y, $vertical=false) {
 
         $wordArray = str_split(strtoupper($word));
         $score = 0;
@@ -90,8 +90,8 @@ class Scrabble {
 
         // use $h and $v values to increment the board array in either a
         // horizontal or vertical direction
-        $h = $vert ? 0 : 1;
-        $v = $vert ? 1 : 0;
+        $h = $vertical ? 0 : 1;
+        $v = $vertical ? 1 : 0;
 
         // calculate the word score based on the position on the board
         for ($j=0; $j<count($wordArray); $j++) {
@@ -141,6 +141,9 @@ class Scrabble {
         return "";
     }
 
+    // internall the board is at (0,0) so that arrays are indexed
+    // correctly. Externally the origin is at (1,1) cause that's
+    // what most people understand
     public function convertToHtmlPos($score) {
         $score[2]++;
         $score[1]++;
@@ -189,30 +192,10 @@ class Scrabble {
         return $tileHtml;
     }
 
-
-    // nasty function that translates the letterTile to a position on the scrabble board
-    // really nightmarish to deal with
-    // in the x direction it places automatically
-    // in the y direction you need to calculate an offset for each letter and also
-    // calculate how much to push the square back in the x direction
-    // I'm sure there's a better way.  I just don't know it yet.
-    private function positionTranslate($xy, $lpos, $vert) {
-        if ($vert) {
-            $xpos = (5 + ($xy[0]*31) - $lpos*31) ."px";
-            $ypos = (-469 + $xy[1]*31) . "px";
-        }
-        else {
-            $xpos = (5 + $xy[0]*31) ."px";
-            $ypos = (-469 + $xy[1]*31) . "px";
-        }
-
-        return [$xpos, $ypos];
-    }
-
     // creates the scrabble board as a table in html
     public function getBoardLayout() {
 
-        $tableHtml = "<table id='scrabbleLayout' width='474' height='474'>\r\n";
+        $tableHtml = "<table id='scrabbleLayout'>\r\n";
 
         for ($i=0; $i<count($this->board); $i++) {
             $tableHtml .= "<tr>\r\n";
@@ -231,6 +214,25 @@ class Scrabble {
 
         $tableHtml .= "</table>\r\n";
         return $tableHtml;
+    }
+
+    // nasty function that translates the letterTile to a position on the scrabble board
+    // really nightmarish to deal with
+    // in the x direction it places automatically
+    // in the y direction you need to calculate an offset for each letter and also
+    // calculate how much to push the square back in the x direction
+    // I'm sure there's a better way.  I just don't know it yet.
+    private function positionTranslate($xy, $lpos, $vert) {
+        if ($vert) {
+            $xpos = (5 + ($xy[0]*31) - $lpos*31) ."px";
+            $ypos = (-469 + $xy[1]*31) . "px";
+        }
+        else {
+            $xpos = (5 + $xy[0]*31) ."px";
+            $ypos = (-469 + $xy[1]*31) . "px";
+        }
+
+        return [$xpos, $ypos];
     }
 
     // helper function that sets the text inside the board squares
