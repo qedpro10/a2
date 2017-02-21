@@ -30,10 +30,6 @@ h2 {
 .boardTile {
 	height: 30px;
 	width: 30px;
-    border-top-width: 1px;
-	border-right-width: 4px;
-	border-bottom-width: 4px;
-	border-left-width: 1px;
     border-collapse: collapse; /* single border not detached */
 
 }
@@ -74,7 +70,7 @@ table {
 td {
     height: 30px;
     width: 30px;
-    border: 2px solid white;
+    border: 1px solid white;
 }
 
 /* these are the board Tile types that denote
@@ -90,6 +86,7 @@ td {
    background-color: #e8221e;
    font-size: 6px;
    text-align: center;
+   display: table-cell;
    vertical-align: middle;
 }
 
@@ -97,6 +94,7 @@ td {
    background-color: pink;
    font-size: 6px;
    text-align: center;
+   display: table-cell;
    vertical-align: middle;
 }
 
@@ -104,12 +102,14 @@ td {
    background-color: #5b54de;
    font-size: 6px;
    text-align: center;
+   display: table-cell;
    vertical-align: middle;
 }
 
 .dls {
    background-color: lightblue;
    font-size: 6px;
+   display: table-cell;
    text-align: center;
    vertical-align: middle;
 }

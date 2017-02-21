@@ -99,8 +99,11 @@ if($form->isSubmitted()) {
             $yourScoreBingo = $sBoard->getBingoScore($word, $yourScore[0]);
         }
 
-
-        echo "x,y=" .$x ."," .$y;
         $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
     }
+
+
+    // why is this here?  because the output works when its here 
+    //and doesn't work when it isn't
+    echo " ";
 }
