@@ -29,7 +29,7 @@
                     <input type='text' name='word' required id='word' value='<?=$form->prefill('word', '')?>'>
                     (Required*)<br><br>
 
-                    <label for='xpos'>Choose a position (x,y)</label>
+                    <label>Choose a position (x,y): </label>
                     <select name='xpos'>
                         <option value="any">any</option>
                         <option value="0"  <?php if($form->get('xpos') == '0') echo 'SELECTED'?> >1</option>
@@ -73,7 +73,7 @@
                         <label><input type='radio' name='orientation' value='vertical' <?php if($form->get('orientation')=='vertical') echo 'CHECKED' ?>> Vertical</label>
                     </fieldset>
 
-                    <label for='bingo'>Include 50 point Bingo: </label>
+                    <label>Include 50 point Bingo: </label>
                     <input type='checkbox' name="bingo" <?php if($form->isChosen('bingo')) echo 'CHECKED' ?>><br><br>
 
                     <div class="btn-calc">
