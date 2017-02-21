@@ -1,5 +1,5 @@
 body {
-    //font-family: sans-serif;
+    font-family: sans-serif;
 }
 
 h1 {
@@ -12,13 +12,6 @@ h1 {
 h2 {
     margin-bottom: 20px;
 }
-/**
- * style input elements that have a required
- * attribute and a hover state
- */
-input:required:hover {
-  opacity: 1;
-}
 
 .radios {
     margin-top: 15px;
@@ -27,17 +20,20 @@ input:required:hover {
 
 /* defines the scrabble board layout */
 #scrabbleLayout {
-    width: 474;
-    height: 474;
+    width: 474px;
+    height: 474px;
     border: 5px solid black;
     background-color: white;
 }
 
 /* defines the basic board square on the scrabble board */
-#boardTile {
+.boardTile {
 	height: 30px;
 	width: 30px;
-    border: 2px;
+    border-top-width: 1px;
+	border-right-width: 4px;
+	border-bottom-width: 4px;
+	border-left-width: 1px;
     border-collapse: collapse; /* single border not detached */
 
 }
@@ -76,8 +72,9 @@ table {
 }
 
 td {
-   border: 2px solid white;
-   //border-collapse: collapse;
+    height: 30px;
+    width: 30px;
+    border: 2px solid white;
 }
 
 /* these are the board Tile types that denote

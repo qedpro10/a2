@@ -203,10 +203,10 @@ class Scrabble {
                 if($element != "") {
                     $blockText = $this->getBlockText($element);
                     $boardTileClass = strtolower($element);
-                    $tableHtml .= "<td><div id='boardTile' class='$boardTileClass'><span>$blockText</span></div></td>\r\n";
+                    $tableHtml .= "<td><div class='boardTile $boardTileClass'><span>$blockText</span></div></td>\r\n";
                 }
                 else {
-                    $tableHtml .= "<td><div id='boardTile' class='blank'></div></td>\r\n";
+                    $tableHtml .= "<td><div class='boardTile blank'></div></td>\r\n";
                 }
             }
             $tableHtml .= "</tr>\r\n";
