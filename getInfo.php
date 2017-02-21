@@ -100,7 +100,7 @@ if($form->isSubmitted()) {
         }
 
 
-        echo "x,y=" .$x ."," .$y;
+        //echo "x,y=" .$x ."," .$y;
         $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
     }
 }
