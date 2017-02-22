@@ -44,66 +44,66 @@ if($form->isSubmitted()) {
         ]
     );
 
+    // the Forms will do the appropriate checks for length and non-alpha however
+    // they can't check for placement errors
+    // No need to check kplacement until all the initial errors are resolved
+    if (!$errors) {
 
-    if ($xPosition == 'any') {
-        // pick a random x based on word size and whether or not vertical is selected
-        if ($vertical) {
-            $x = rand(0, 14);
+        if ($xPosition == 'any') {
+            // pick a random x based on word size and whether or not vertical is selected
+            if ($vertical) {
+                $x = rand(0, 14);
+            }
+            else {
+                $x = rand(0, 14-strlen($word)+1);
+            }
         }
         else {
-            $x = rand(0, 14-strlen($word)+1);
+            $x = $xPosition;
         }
-    }
-    else {
-        $x = $xPosition;
-    }
 
-    if ($yPosition == 'any') {
-        // pick a random x based on word sze and whether or not vertical is selected
-        if ($vertical) {
-            $y = rand(0, 14-strlen($word)+1);
+        if ($yPosition == 'any') {
+            // pick a random x based on word sze and whether or not vertical is selected
+            if ($vertical) {
+                $y = rand(0, 14-strlen($word)+1);
+            }
+            else {
+                $y = rand(0, 14);
+            }
         }
         else {
-            $y = rand(0, 14);
-        }
-    }
-    else {
-        $y = $yPosition;
-    }
-
-    // check word placement for user selection position
-    $posOk = $sBoard->checkWordPlacement($word, $xPosition, $yPosition, $vertical);
-    //Tools::dump($posOk);
-    if (!$posOk) {
-        $v = $vertical ? " vertically" : "";
-        // internal to external position conversion
-        $x = $xPosition == "any" ? "any" : $xPosition+1;
-        $y = $yPosition == "any" ? "any" : $yPosition+1;
-        array_push($errors, "Word cannot fit$v on board at ($x, $y)");
-    }
-
-    if(!$errors) {
-        // get the min/max scores
-        $maxWordScore = $sBoard->getMaxScore($word, $vertical);
-        $maxWordScore = $sBoard->convertToHtmlPos($maxWordScore);
-
-        $minWordScore = $sBoard->getMinScore($word, $vertical);
-        $minWordScore = $sBoard->convertToHtmlPos($minWordScore);
-
-        $yourScore = $sBoard->getScoreByPosition($word, $x, $y, $vertical);
-        $yourScore = $sBoard->convertToHtmlPos($yourScore);
-
-        if ($bingo) {
-            $minScoreBingo = $sBoard->getBingoScore($word, $minWordScore[0]);
-            $maxScoreBingo = $sBoard->getBingoScore($word, $maxWordScore[0]);
-            $yourScoreBingo = $sBoard->getBingoScore($word, $yourScore[0]);
+            $y = $yPosition;
         }
 
-        $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
+        // check word placement for user selection position
+        $posOk = $sBoard->checkWordPlacement($word, $xPosition, $yPosition, $vertical);
+        //Tools::dump($posOk);
+        if (!$posOk) {
+            $v = $vertical ? " vertically" : " horizontally";
+            // internal to external position conversion
+            $x = $xPosition == "any" ? "any" : $xPosition+1;
+            $y = $yPosition == "any" ? "any" : $yPosition+1;
+            array_push($errors, "Word cannot fit$v on board at ($x, $y)");
+        }
+
+        if(!$errors) {
+            // get the min/max scores
+            $maxWordScore = $sBoard->getMaxScore($word, $vertical);
+            $maxWordScore = $sBoard->convertToHtmlPos($maxWordScore);
+
+            $minWordScore = $sBoard->getMinScore($word, $vertical);
+            $minWordScore = $sBoard->convertToHtmlPos($minWordScore);
+
+            $yourScore = $sBoard->getScoreByPosition($word, $x, $y, $vertical);
+            $yourScore = $sBoard->convertToHtmlPos($yourScore);
+
+            if ($bingo) {
+                $minScoreBingo = $sBoard->getBingoScore($word, $minWordScore[0]);
+                $maxScoreBingo = $sBoard->getBingoScore($word, $maxWordScore[0]);
+                $yourScoreBingo = $sBoard->getBingoScore($word, $yourScore[0]);
+            }
+
+            $yourTileHtml = $sBoard->tileSetup($word, $x, $y, $vertical);
+        }
     }
-
-
-    // why is this here?  because the output works when its here
-    //and doesn't work when it isn't
-    //echo " ";
 }
