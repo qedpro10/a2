@@ -27,8 +27,6 @@ $word = $form->get('word', '');
 
 $xPosition = $form->get('xpos', 'any');
 $yPosition = $form->get('ypos', 'any');
-//Tools::dump($xPosition);
-//Tools::dump($yPosition);
 
 $yourTileHtml = "";
 $minScoreBingo = "";
@@ -39,18 +37,20 @@ if($form->isSubmitted()) {
 
     $errors = $form->validate(
         [
-            // word is required, needs at least 1 vowel, only letters, length 2-7
+            // word is required, needs at least 1 vowel,
+            // only letters, length 2-7
             'word' => 'required|alpha|vowel:1|maxlength:7|minlength:2',
         ]
     );
 
-    // the Forms will do the appropriate checks for length and non-alpha however
-    // they can't check for placement errors
-    // No need to check kplacement until all the initial errors are resolved
+    // the Forms will do the appropriate checks for length and non-alpha
+    // however they can't check for placement errors
+    // No need to check placement until all the initial errors are resolved
     if (!$errors) {
 
         if ($xPosition == 'any') {
-            // pick a random x based on word size and whether or not vertical is selected
+            // pick a random x based on word size and whether or
+            // not vertical is selected
             if ($vertical) {
                 $x = rand(0, 14);
             }
@@ -63,7 +63,8 @@ if($form->isSubmitted()) {
         }
 
         if ($yPosition == 'any') {
-            // pick a random x based on word sze and whether or not vertical is selected
+            // pick a random x based on word size and whether
+            // or not vertical is selected
             if ($vertical) {
                 $y = rand(0, 14-strlen($word)+1);
             }
@@ -76,8 +77,8 @@ if($form->isSubmitted()) {
         }
 
         // check word placement for user selection position
-        $posOk = $sBoard->checkWordPlacement($word, $xPosition, $yPosition, $vertical);
-        //Tools::dump($posOk);
+        $posOk = $sBoard->checkPlace($word, $xPosition, $yPosition, $vertical);
+
         if (!$posOk) {
             $v = $vertical ? " vertically" : " horizontally";
             // internal to external position conversion

@@ -31,7 +31,6 @@ class Scrabble {
         $boardJson = file_get_contents($boardFile);
         $this->board = json_decode($boardJson, $assoc=true);
 
-        //Tools::dump($this->tiles);
     }
 
     /* move the word around the board to find the max score
@@ -154,7 +153,7 @@ class Scrabble {
      * position specified
      * returns Boolean
      */
-    public function checkWordPlacement($word, $x, $y, $vertical = false) {
+    public function checkPlace($word, $x, $y, $vertical = false) {
         if ($vertical) {
             if (($y + strlen($word)) > 15) return false;
             else return true;
@@ -182,7 +181,7 @@ class Scrabble {
                 $pos = $this->positionTranslate($xy, $tile, $vertical);
                 $tileVal = $this->tiles[$element];
                 $tileHtml .= "<td><div id='letterTile' style='position:relative;left:$pos[0];top:$pos[1];'><span>$element</span><span class='number'>$tileVal</span></div></td>\r\n";
-                if($vertical==true) {
+                if($vertical) {
                     $xy[1]++;
                 }
             }
@@ -216,22 +215,22 @@ class Scrabble {
         return $tableHtml;
     }
 
-    /* nasty function that translates the letterTile to a position on the scrabble board
-     * really nightmarish to deal with - i had to muck around with this a lot to get it to
-     * look ok.
-     * need to calculate an offset for each letter and also
+    /* nasty function that translates the letterTile to a position on the
+     * scrabble board really nightmarish to deal with - i had to muck around
+     * with this a lot to get it to look ok.
+     * Need to calculate an offset for each letter and also
      * calculate how much to push the square back in the x direction
      * I'm sure there's a better way.  I just don't know it yet.
      */
     private function positionTranslate($xy, $lpos, $vert) {
-        $offset = 31;
+        $OFFSET = 31;
         if ($vert) {
-            $xpos = (5 + $xy[0]*$offset - $lpos*($offset-1)) ."px";
-            $ypos = (-469 + $xy[1]*($offset)) . "px";
+            $xpos = (5 + $xy[0]*$OFFSET - $lpos*($OFFSET-1)) ."px";
+            $ypos = (-469 + $xy[1]*($OFFSET)) . "px";
         }
         else {
-            $xpos = (5 + $xy[0]*($offset) +  $lpos*0.75) ."px";
-            $ypos = (-469 + $xy[1]*$offset) . "px";
+            $xpos = (5 + $xy[0]*($OFFSET) +  $lpos*0.75) ."px";
+            $ypos = (-469 + $xy[1]*$OFFSET) . "px";
         }
 
         return [$xpos, $ypos];

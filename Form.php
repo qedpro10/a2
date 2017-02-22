@@ -12,15 +12,15 @@ namespace DWA;
 class Form {
 
     /**
-	* Properties
-	*/
+    * Properties
+    */
     private $request;
     public $hasErrors = false;
 
 
     /**
-	*
-	*/
+    *
+    */
     public function __construct($postOrGet) {
 
         # Store form data (POST or GET) in a class property called $request
@@ -30,14 +30,14 @@ class Form {
 
 
     /**
-	* Get a value from the request, with the option of including a default
+    * Get a value from the request, with the option of including a default
     * if the value is not set.
     * Example usage:
     *   $email = $this->get('email','example@gmail.com');
-	*/
+    */
     public function get($name, $default = null) {
 
-        $value = isset($this->request[$name]) ? $this->request[$name] : $default;
+        $value = isset($this->request[$name]) ? $this->request[$name]: $default;
 
         return $value;
 
@@ -45,10 +45,10 @@ class Form {
 
 
     /**
-	* Determines if a single checkbox is checked
+    * Determines if a single checkbox is checked
     * Example usage:
-    *   <input type='checkbox' name='caseSensitive' <?php if($form->isChecked('caseSensitive')) echo 'CHECKED' ?>>
-	*/
+    *   <input type='checkbox' name='caseSensitive' <if($form->isChecked('caseSensitive')) echo 'CHECKED' ?>>
+    */
     public function isChosen($name) {
         $value = isset($this->request[$name]) ? true : false;
 
@@ -199,16 +199,16 @@ class Form {
     }
 
     /**
-	* Returns boolean if given value contains no vowels
-	*/
+    * Returns boolean if given value contains no vowels
+    */
     private function vowel($value, $parameter) {
         $out = preg_match_all('#[aeiou]#', strtolower($value));
         return $out >= floatval($parameter);
     }
 
     /**
-	* Returns boolean if given value contains only numbers
-	*/
+    * Returns boolean if given value contains only numbers
+    */
     private function numeric($value) {
         return ctype_digit(str_replace(' ','', $value));
     }
@@ -224,15 +224,15 @@ class Form {
 
 
     /**
-	* Returns boolean if the given value is a valid email address
-	*/
+    * Returns boolean if the given value is a valid email address
+    */
     private function email($value) {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 
 
     /**
-	* Returns value if the given value is GREATER THAN (non-inclusive) the given parameter
+    * Returns value if the given value is GREATER THAN (non-inclusive) the given parameter
 	*/
     private function min($value, $parameter) {
         return floatval($value) > floatval($parameter);
