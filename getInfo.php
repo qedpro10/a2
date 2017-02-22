@@ -39,7 +39,7 @@ if($form->isSubmitted()) {
         [
             // word is required, needs at least 1 vowel,
             // only letters, length 2-7
-            'word' => 'required|alpha|vowel:1|maxlength:7|minlength:2',
+            'word' => 'required|minlength:2|maxlength:7|alpha|vowel:1',
         ]
     );
 
