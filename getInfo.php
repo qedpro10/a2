@@ -46,7 +46,7 @@ if($form->isSubmitted()) {
     // the Forms will do the appropriate checks for length and non-alpha
     // however they can't check for placement errors
     // No need to check placement until all the initial errors are resolved
-    if (!$errors) {
+    if (empty($errors)) {
 
         if ($xPosition == 'any') {
             // pick a random x based on word size and whether or
@@ -87,7 +87,7 @@ if($form->isSubmitted()) {
             array_push($errors, "Word cannot fit$v on board at ($x, $y)");
         }
 
-        if(!$errors) {
+        if(empty($errors)) {
             // get the min/max scores
             $maxWordScore = $sBoard->getMaxScore($word, $vertical);
             $maxWordScore = $sBoard->convertToHtmlPos($maxWordScore);

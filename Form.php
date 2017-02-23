@@ -146,7 +146,7 @@ class Form {
         }
 
         # Set public property hasErrors as Boolean
-        $this->hasErrors = empty($errors);
+        $this->hasErrors = !empty($errors);
 
         return $errors;
 
