@@ -171,6 +171,9 @@ class Form {
             'minlength' => ' length must be greater than or equal to '.$parameter,
             'maxlength' => ' length must be less than or equal to '.$parameter,
             'vowel' => ' must contain at least '.$parameter . ' vowel',
+            'radio' => ' value must be horizontal or vertical',
+            'checkbox' => ' value must be on or off',
+            'position' => ' value must be 1-15 or any',
         ];
 
         # If a message for the rule was found, use that, otherwise default to " has an error"
@@ -262,5 +265,34 @@ class Form {
         return strlen($value) <= floatval($parameter);
     }
 
+    /**
+    * Returns false if the orientation is not specified correctly
+    */
+    private function radio($value) {
+        if (($value == 'horizontal') || ($value == 'vertical')) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+    * Returns false if the checkbox is not equal to on or ''
+    */
+    private function checkbox($value) {
+        if (($value == 'on') || ($value == '')) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+    * Returns false if the orientation is not specified correctly
+    */
+    private function position($value) {
+        if (($value == 'any') || ($value >=0 && $value <15)) {
+            return true;
+        }
+        return false;
+    }
 
 } # end of class
