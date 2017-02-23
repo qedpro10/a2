@@ -172,7 +172,7 @@ class Form {
             'maxlength' => ' length must be less than or equal to '.$parameter,
             'vowel' => ' must contain at least '.$parameter . ' vowel',
             'radio' => ' value must be horizontal or vertical',
-            'checkbox' => ' value must be on or off',
+            'checkbox' => ' value must be on',
             'position' => ' value must be 1-15 or any',
         ];
 

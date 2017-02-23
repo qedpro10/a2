@@ -31,51 +31,51 @@
                     </p>
                     <label>Choose a position (x,y): </label>
                     <select name='xpos'>
-                        <option value="any">any</option>
-                        <option value="0"  <?php if($form->get('xpos') == '0') echo 'SELECTED'?> >1</option>
-                        <option value="1"  <?php if($form->get('xpos') == '1') echo 'SELECTED'?>>2</option>
-                        <option value="2"  <?php if($form->get('xpos') == '2') echo 'SELECTED'?>>3</option>
-                        <option value="3"  <?php if($form->get('xpos') == '3') echo 'SELECTED'?>>4</option>
-                        <option value="4"  <?php if($form->get('xpos') == '4') echo 'SELECTED'?>>5</option>
-                        <option value="5"  <?php if($form->get('xpos') == '5') echo 'SELECTED'?>>6</option>
-                        <option value="6"  <?php if($form->get('xpos') == '6') echo 'SELECTED'?>>7</option>
-                        <option value="7"  <?php if($form->get('xpos') == '7') echo 'SELECTED'?>>8</option>
-                        <option value="8"  <?php if($form->get('xpos') == '8') echo 'SELECTED'?>>9</option>
-                        <option value="9"  <?php if($form->get('xpos') == '9') echo 'SELECTED'?>>10</option>
-                        <option value="10" <?php if($form->get('xpos') == '10') echo 'SELECTED'?>>11</option>
-                        <option value="11" <?php if($form->get('xpos') == '11') echo 'SELECTED'?>>12</option>
-                        <option value="12" <?php if($form->get('xpos') == '12') echo 'SELECTED'?>>13</option>
-                        <option value="13" <?php if($form->get('xpos') == '13') echo 'SELECTED'?>>14</option>
-                        <option value="14" <?php if($form->get('xpos') == '14') echo 'SELECTED'?>>15</option>
+                        <option value="any"<?php if($form->prefill('xpos', '') == 'any') echo 'SELECTED'?>>any</option>
+                        <option value="0"  <?php if($form->prefill('xpos', '') == '0')  echo 'SELECTED'?> >1</option>
+                        <option value="1"  <?php if($form->prefill('xpos', '') == '1')  echo 'SELECTED'?>>2</option>
+                        <option value="2"  <?php if($form->prefill('xpos', '') == '2')  echo 'SELECTED'?>>3</option>
+                        <option value="3"  <?php if($form->prefill('xpos', '') == '3')  echo 'SELECTED'?>>4</option>
+                        <option value="4"  <?php if($form->prefill('xpos', '') == '4')  echo 'SELECTED'?>>5</option>
+                        <option value="5"  <?php if($form->prefill('xpos', '') == '5')  echo 'SELECTED'?>>6</option>
+                        <option value="6"  <?php if($form->prefill('xpos', '') == '6')  echo 'SELECTED'?>>7</option>
+                        <option value="7"  <?php if($form->prefill('xpos', '') == '7')  echo 'SELECTED'?>>8</option>
+                        <option value="8"  <?php if($form->prefill('xpos', '') == '8')  echo 'SELECTED'?>>9</option>
+                        <option value="9"  <?php if($form->prefill('xpos', '') == '9')  echo 'SELECTED'?>>10</option>
+                        <option value="10" <?php if($form->prefill('xpos', '') == '10') echo 'SELECTED'?>>11</option>
+                        <option value="11" <?php if($form->prefill('xpos', '') == '11') echo 'SELECTED'?>>12</option>
+                        <option value="12" <?php if($form->prefill('xpos', '') == '12') echo 'SELECTED'?>>13</option>
+                        <option value="13" <?php if($form->prefill('xpos', '') == '13') echo 'SELECTED'?>>14</option>
+                        <option value="14" <?php if($form->prefill('xpos', '') == '14') echo 'SELECTED'?>>15</option>
                     </select>
                     <select name='ypos'>
-                        <option value="any">any</option>
-                        <option value="0"  <?php if($form->get('ypos') == '0')  echo 'SELECTED'?> >1</option>
-                        <option value="1"  <?php if($form->get('ypos') == '1')  echo 'SELECTED'?>>2</option>
-                        <option value="2"  <?php if($form->get('ypos') == '2')  echo 'SELECTED'?>>3</option>
-                        <option value="3"  <?php if($form->get('ypos') == '3')  echo 'SELECTED'?>>4</option>
-                        <option value="4"  <?php if($form->get('ypos') == '4')  echo 'SELECTED'?>>5</option>
-                        <option value="5"  <?php if($form->get('ypos') == '5')  echo 'SELECTED'?>>6</option>
-                        <option value="6"  <?php if($form->get('ypos') == '6')  echo 'SELECTED'?>>7</option>
-                        <option value="7"  <?php if($form->get('ypos') == '7')  echo 'SELECTED'?>>8</option>
-                        <option value="8"  <?php if($form->get('ypos') == '8')  echo 'SELECTED'?>>9</option>
-                        <option value="9"  <?php if($form->get('ypos') == '9')  echo 'SELECTED'?>>10</option>
-                        <option value="10" <?php if($form->get('ypos') == '10') echo 'SELECTED'?>>11</option>
-                        <option value="11" <?php if($form->get('ypos') == '11') echo 'SELECTED'?>>12</option>
-                        <option value="12" <?php if($form->get('ypos') == '12') echo 'SELECTED'?>>13</option>
-                        <option value="13" <?php if($form->get('ypos') == '13') echo 'SELECTED'?>>14</option>
-                        <option value="14" <?php if($form->get('ypos') == '14') echo 'SELECTED'?>>15</option>
+                        <option value="any"<?php if($form->prefill('ypos', '') == 'any') echo 'SELECTED'?>>any</option>
+                        <option value="0"  <?php if($form->prefill('ypos', '') == '0')  echo 'SELECTED'?> >1</option>
+                        <option value="1"  <?php if($form->prefill('ypos', '') == '1')  echo 'SELECTED'?>>2</option>
+                        <option value="2"  <?php if($form->prefill('ypos', '') == '2')  echo 'SELECTED'?>>3</option>
+                        <option value="3"  <?php if($form->prefill('ypos', '') == '3')  echo 'SELECTED'?>>4</option>
+                        <option value="4"  <?php if($form->prefill('ypos', '') == '4')  echo 'SELECTED'?>>5</option>
+                        <option value="5"  <?php if($form->prefill('ypos', '') == '5')  echo 'SELECTED'?>>6</option>
+                        <option value="6"  <?php if($form->prefill('ypos', '') == '6')  echo 'SELECTED'?>>7</option>
+                        <option value="7"  <?php if($form->prefill('ypos', '') == '7')  echo 'SELECTED'?>>8</option>
+                        <option value="8"  <?php if($form->prefill('ypos', '') == '8')  echo 'SELECTED'?>>9</option>
+                        <option value="9"  <?php if($form->prefill('ypos', '') == '9')  echo 'SELECTED'?>>10</option>
+                        <option value="10" <?php if($form->prefill('ypos', '') == '10') echo 'SELECTED'?>>11</option>
+                        <option value="11" <?php if($form->prefill('ypos', '') == '11') echo 'SELECTED'?>>12</option>
+                        <option value="12" <?php if($form->prefill('ypos', '') == '12') echo 'SELECTED'?>>13</option>
+                        <option value="13" <?php if($form->prefill('ypos', '') == '13') echo 'SELECTED'?>>14</option>
+                        <option value="14" <?php if($form->prefill('ypos', '') == '14') echo 'SELECTED'?>>15</option>
                     </select>
 
                     <fieldset class='radios'>
                         <label>Word orientation: </label>
                         <label><input type='radio' name='orientation' value='horizontal' <?php if($form->prefill('orientation', 'horizontal') == 'horizontal') echo 'CHECKED' ?>> Horizontal</label>
-                        <label><input type='radio' name='orientation' value='vertical' <?php if($form->get('orientation')=='vertical') echo 'CHECKED' ?>> Vertical</label>
+                        <label><input type='radio' name='orientation' value='vertical' <?php if($form->prefill('orientation', '')=='vertical') echo 'CHECKED' ?>> Vertical</label>
                     </fieldset>
 
                     <p>
                         <label>Include 50 point Bingo: </label>
-                        <input type='checkbox' name="bingo" <?php if($form->isChosen('bingo')) echo 'CHECKED' ?>>
+                        <input type='checkbox' name="bingo" <?php if($form->prefill('bingo', '') == 'on') echo 'CHECKED' ?>>
                     </p>
 
                     <div class="btn-calc">
