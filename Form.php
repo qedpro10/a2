@@ -205,7 +205,7 @@ class Form {
     * Returns boolean if given value contains no vowels
     */
     private function vowel($value, $parameter) {
-        $out = preg_match_all('#[aeiou]#', strtolower($value));
+        $out = preg_match_all('#[aeiouy]#', strtolower($value));
         return $out >= floatval($parameter);
     }
 
